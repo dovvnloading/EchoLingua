@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoLingua AI | Real-Time Interpretation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        googleBlue: '#4285F4',
+                        darkBg: '#0B0C10',
+                        cardBg: '#15171E',
+                        borderCol: '#1F2937'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0C10;
+            background-image: radial-gradient(circle at 50% 0%, #1a2035 0%, #0B0C10 70%);
+            color: #e2e8f0;
+        }
+        .glass-panel {
+            background: rgba(21, 23, 30, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .code-window {
+            background: #0f1117;
+            border: 1px solid #1F2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .code-header {
+            background: #161b22;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #1F2937;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #eab308; }
+        .dot-green { background: #22c55e; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0C10; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased selection:bg-googleBlue selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-mono font-bold text-lg tracking-tighter text-white">ECHO<span class="text-googleBlue">LINGUA</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#stack" class="hover:text-white transition-colors">Stack</a>
+                <a href="#architecture" class="hover:text-white transition-colors">Architecture</a>
+                <a href="#usage" class="hover:text-white transition-colors">Usage</a>
+            </div>
+            <a href="https://github.com/dovvnloading/EchoLingua" target="_blank" class="text-sm font-mono bg-white/5 hover:bg-white/10 px-4 py-2 rounded text-white transition-colors border border-white/10 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                Star Repo
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-20 px-6 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <!-- Banner Shield -->
+            <div class="mb-8 inline-block hover:scale-105 transition-transform duration-300 cursor-default">
+                <a href="https://github.com/google/genai-toolbox">
+                    <img src="https://img.shields.io/badge/ECHO-LINGUA-black?style=for-the-badge&logoColor=white&logo=googlecloud&labelColor=black&color=4285F4" alt="EchoLingua Logo" class="h-16 shadow-lg shadow-blue-500/20">
+                </a>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
+                Real-Time AI <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Interpretation Lab</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-400 mb-10 font-light max-w-2xl mx-auto">
+                Powered by Google Gemini 2.5 Flash & Gemini Live API. <br class="hidden md:block">
+                Bridging language barriers with low-latency audio processing.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+                <a href="https://github.com/dovvnloading/EchoLingua" target="_blank" 
+                   class="flex items-center gap-2 bg-googleBlue hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-bold transition-all shadow-[0_0_20px_rgba(66,133,244,0.3)] hover:shadow-[0_0_30px_rgba(66,133,244,0.5)] hover:-translate-y-0.5">
+                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                   EchoLingua Project
+                </a>
+                <a href="https://github.com/dovvnloading" target="_blank" 
+                   class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-3 rounded-lg font-medium transition-all backdrop-blur-sm hover:border-white/30">
+                   <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                   @dovvnloading
+                </a>
+            </div>
+
+            <!-- Shield Grid -->
+            <div class="flex flex-wrap justify-center gap-3 mb-16">
+                <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+                <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+                <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+                <img src="https://img.shields.io/badge/Google_GenAI-8E75B2?style=for-the-badge&logo=google&logoColor=white" alt="Gemini">
+                <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Screenshot -->
+    <section class="px-4 mb-24">
+        <div class="max-w-6xl mx-auto">
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <img 
+                    src="https://github.com/user-attachments/assets/4a4b4ceb-479a-4a30-9c40-3cad2a8431cf" 
+                    alt="App Interface" 
+                    class="relative rounded-lg border border-white/10 shadow-2xl w-full"
+                >
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview & Features -->
+    <main class="max-w-6xl mx-auto px-6">
+        
+        <!-- Overview -->
+        <section class="mb-24 grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-3">
+                <h2 class="text-3xl font-bold text-white mb-6 border-l-4 border-googleBlue pl-4">Overview</h2>
+                <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                    <strong class="text-white">EchoLingua AI</strong> is a sophisticated web application engineered for real-time simultaneous interpretation. By leveraging the low-latency capabilities of <strong class="text-googleBlue">Google's Gemini Live API</strong>, the application bridges language barriers instantly while offering a dedicated writing lab for granular text critique.
+                </p>
+                <p class="text-slate-400 text-lg leading-relaxed">
+                    The user experience is built upon a <strong class="text-white">"Thumb UI" philosophy</strong>, anchoring critical controls to the bottom of the viewport for optimal one-handed mobile interaction.
+                </p>
+            </div>
+        </section>
+
+        <!-- Core Features Grid -->
+        <section id="features" class="mb-24">
+            <h2 class="text-3xl font-bold text-white mb-10 border-l-4 border-googleBlue pl-4">Core Features</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dual-Voice Interpreter</h3>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">▹</span> Simultaneous Live API Interpretation</li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">▹</span> Bi-Directional Flow (No toggle needed)</li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">▹</span> Raw PCM Audio Processing (16kHz/24kHz)</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-colors">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Writing & Pronunciation Lab</h3>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">▹</span> Schema-Enforced Granular Analysis</li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">▹</span> IPA Transcriptions & Error Logic</li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">▹</span> Neural Text-to-Speech Playback</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Table -->
+        <section id="stack" class="mb-24">
+            <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-googleBlue pl-4">Technical Stack</h2>
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/10">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-white/5 text-white text-sm uppercase tracking-wider font-mono border-b border-white/10">
+                            <th class="p-4 font-bold">Category</th>
+                            <th class="p-4 font-bold">Technology</th>
+                            <th class="p-4 font-bold">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-300 text-sm divide-y divide-white/5">
+                        <tr>
+                            <td class="p-4 font-mono text-blue-400">Frontend</td>
+                            <td class="p-4 font-semibold text-white">React 19</td>
+                            <td class="p-4">Built with TypeScript for type safety.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-mono text-blue-400">Styling</td>
+                            <td class="p-4 font-semibold text-white">Tailwind CSS</td>
+                            <td class="p-4">Utility-first styling framework.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-mono text-blue-400">SDK</td>
+                            <td class="p-4 font-semibold text-white">Google GenAI</td>
+                            <td class="p-4">@google/genai integration.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-mono text-blue-400">Audio</td>
+                            <td class="p-4 font-semibold text-white">Web Audio API</td>
+                            <td class="p-4">AudioContext & ScriptProcessorNode for PCM stream.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Architecture Code Block -->
+        <section id="architecture" class="mb-24">
+            <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-googleBlue pl-4">Architecture Pipeline</h2>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3 class="text-white font-bold mb-2 text-lg">Input Processing</h3>
+                        <p class="text-slate-400 text-sm">Microphone data is captured via <code>getUserMedia</code>, downsampled to <strong>16kHz</strong>, and converted into raw <strong>PCM 16-bit integer</strong> format. This stream is transmitted over WebSocket.</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3 class="text-white font-bold mb-2 text-lg">Output Rendering</h3>
+                        <p class="text-slate-400 text-sm">The model returns base64-encoded PCM data. The frontend decodes this into a <code>Float32Array</code> and schedules playback via <code>AudioBufferSourceNode</code> for gapless audio.</p>
+                    </div>
+                </div>
+
+                <!-- Code Snippet -->
+                <div class="code-window shadow-2xl">
+                    <div class="code-header">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                        <span class="ml-2 text-xs text-slate-500 font-mono">audio-pipeline.ts</span>
+                    </div>
+                    <div class="p-4 overflow-x-auto">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+<span class="text-purple-400">const</span> processAudio = (stream) => {
+  <span class="text-slate-500">// Downsample to 16kHz</span>
+  <span class="text-blue-400">const</span> pcmData = convertToPCM(stream);
+  
+  <span class="text-slate-500">// Stream via WebSocket</span>
+  socket.send(pcmData);
+
+  <span class="text-slate-500">// Handle Response</span>
+  <span class="text-purple-400">return</span> decodeBase64(response.audio);
+};
+</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation" class="mb-24">
+            <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-googleBlue pl-4">Installation</h2>
+            
+            <div class="code-window shadow-2xl mb-8">
+                <div class="code-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span class="ml-2 text-xs text-slate-500 font-mono">terminal</span>
+                </div>
+                <div class="p-6 overflow-x-auto">
+<pre class="text-sm font-mono text-slate-300">
+<span class="text-slate-500"># Clone the repository</span>
+git clone https://github.com/dovvnloading/EchoLingua.git
+cd echolingua-ai
+
+<span class="text-slate-500"># Install dependencies</span>
+npm install
+
+<span class="text-slate-500"># Start development server</span>
+npm start
+</pre>
+                </div>
+            </div>
+
+            <div class="bg-blue-900/20 border border-blue-500/20 p-6 rounded-xl">
+                <h4 class="text-blue-400 font-bold mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Environment Configuration
+                </h4>
+                <p class="text-slate-400 text-sm mb-4">Create a <code class="bg-black/30 px-2 py-1 rounded text-white">.env</code> file in the root directory:</p>
+                <div class="bg-black/30 p-3 rounded border border-white/5 font-mono text-sm text-green-400">
+                    API_KEY=your_google_genai_api_key
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Guide -->
+        <section id="usage" class="mb-24">
+            <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-googleBlue pl-4">Usage Guide</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Interpreter Mode</h3>
+                    <ol class="list-decimal list-inside space-y-3 text-slate-400 marker:text-blue-500">
+                        <li>Navigate to the <strong>Interpreter</strong> tab.</li>
+                        <li>Designate two active languages.</li>
+                        <li>Activate the <strong>Microphone</strong> to initialize WebSocket.</li>
+                        <li>Speak freely; system auto-detects language.</li>
+                        <li>Deactivate microphone to end session.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Writing Lab</h3>
+                    <ol class="list-decimal list-inside space-y-3 text-slate-400 marker:text-purple-500">
+                        <li>Navigate to the <strong>Writing Lab</strong> tab.</li>
+                        <li>Select target language from dropdown.</li>
+                        <li>Input text into the drafting area.</li>
+                        <li>Select <strong>Review</strong> for Gemini Flash analysis.</li>
+                        <li>Click <strong>Speaker</strong> icon for Neural TTS.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black/20 py-12 mt-12">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <span class="font-mono font-bold text-lg tracking-tighter text-white">ECHO<span class="text-googleBlue">LINGUA</span></span>
+                <p class="text-slate-500 text-sm mt-1">MIT Licensed Open Source Project</p>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <p class="text-slate-400 text-sm">&copy; 2025 EchoLingua AI</p>
+                <div class="text-sm mt-1 text-slate-500">
+                    Owner & Lead Developer: 
+                    <a href="https://github.com/dovvnloading" target="_blank" class="text-white font-semibold hover:text-googleBlue transition-colors">Matthew Robert Wesney</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
