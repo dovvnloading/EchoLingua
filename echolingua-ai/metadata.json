@@ -1,0 +1,7 @@
+{
+  "name": "EchoLingua AI",
+  "description": "A language learning application that provides a real-time AI conversational partner for practice, featuring live audio conversations with transcription and a text-to-speech mode for pronunciation practice. The app is designed with a sleek neumorphic interface.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
